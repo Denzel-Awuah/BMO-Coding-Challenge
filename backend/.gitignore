@@ -1,0 +1,19 @@
+# Python / backend
+__pycache__/
+*.py[cod]
+*$py.class
+env/
+.venv/
+venv/
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+# Local environment and runtime files
+.env
+instance/
+.pytest_cache/
+.vscode/
+.DS_Store
+# Persisted runtime JSON (local only)
+data.json
