@@ -15,5 +15,4 @@ instance/
 .pytest_cache/
 .vscode/
 .DS_Store
-# Persisted runtime JSON (local only)
-data.json
+

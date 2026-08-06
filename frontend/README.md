@@ -36,8 +36,8 @@ VITE_API_BASE=http://localhost:5000 npm start
 
 Run the full stack from the repository root:
 ```bash
-docker build -t bmo-agentcoding-challenge:latest .
-docker run -d --name bmo-agentcoding-challenge -p 80:80 bmo-agentcoding-challenge:latest
+docker build -t bmo-coding-challenge:latest .
+docker run -d --name bmo-coding-challenge -p 80:80 bmo-coding-challenge:latest
 ```
 
 Open **http://localhost** in your browser. The frontend is served by nginx inside
@@ -45,7 +45,7 @@ the container, which also proxies `/api/*` to the Flask backend.
 
 Stop the container:
 ```bash
-docker rm -f bmo-agentcoding-challenge
+docker rm -f bmo-coding-challenge
 ```
 
 ---
