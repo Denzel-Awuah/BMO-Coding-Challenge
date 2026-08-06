@@ -64,11 +64,11 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .message-meta{margin-top:12px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
 .steps-summary{color:var(--muted);cursor:pointer}
 .steps{margin:6px 0 0;padding-left:18px}
-.step-item{font-size:12px;margin-bottom:6px;color:rgba(255,255,255,0.9)}
+.step-item{font-size:12px;margin-bottom:10px;line-height:1.5;color:rgba(255,255,255,0.9)}
 
 /* live steps shown during streaming — no summary toggle */
 .steps-streaming{margin:8px 0 0;padding-left:18px}
-.step-item--live{font-size:12px;margin-bottom:5px;animation:fadeInStep 0.3s ease}
+.step-item--live{font-size:12px;margin-bottom:10px;line-height:1.5;animation:fadeInStep 0.3s ease}
 @keyframes fadeInStep{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
 /* loading dots for assistant placeholder */
