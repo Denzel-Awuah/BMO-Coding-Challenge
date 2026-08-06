@@ -59,6 +59,21 @@ def submit_task():
     return jsonify(result)
 
 
+@app.route("/api/tasks/stream", methods=["POST"])
+def stream_task():
+    payload = request.get_json() or {}
+    task_text = payload.get("task")
+    if not task_text:
+        return jsonify({"error": "task field is required"}), 400
+
+    def event_stream():
+        for evt in agent.handle_stream(task_text):
+            # Server-Sent Events format
+            yield f"data: {json.dumps(evt)}\n\n"
+        # final close
+    return app.response_class(event_stream(), mimetype='text/event-stream')
+
+
 @app.route("/api/tasks", methods=["GET"])
 def get_tasks():
     history = load_history()
