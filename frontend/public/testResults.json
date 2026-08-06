@@ -119,6 +119,42 @@
       "category": "city weather",
       "query": "What is the forecast in Hamilton?",
       "result": "The weather in Hamilton is Sunny with a temperature of 23°C."
+    },
+    {
+      "tool": "Multi-Tool Usage",
+      "category": "WeatherMockTool + TextProcessorTool",
+      "query": "What is the weather in Toronto? Also, what is the word count of this sentence \"The quick brown fox jumps over the lazy dog\"",
+      "result": "The weather in Toronto is Cloudy with a temperature of 27°C.\n\nThe word count for \"The quick brown fox jumps over the lazy dog\" is 9."
+    },
+    {
+      "tool": "Multi-Tool Usage",
+      "category": "CalculatorTool + WeatherMockTool",
+      "query": "Calculate 15 * 4. Also, what is the weather in Vancouver?",
+      "result": "60\n\nThe weather in Vancouver is Cloudy with a temperature of 28°C."
+    },
+    {
+      "tool": "Multi-Tool Usage",
+      "category": "TextProcessorTool + CalculatorTool",
+      "query": "Reverse \"hello world\". Also, calculate 100 / 5",
+      "result": "The reverse of \"hello world\" is \"dlrow olleh\".\n\n20.0"
+    },
+    {
+      "tool": "Multi-Tool Usage",
+      "category": "WeatherMockTool + TextProcessorTool",
+      "query": "What is the weather in London? Also, convert \"bmo bank of montreal\" to uppercase",
+      "result": "The weather in London is Sunny with a temperature of 23°C.\n\nThe uppercase version of \"bmo bank of montreal\" is \"BMO BANK OF MONTREAL\"."
+    },
+    {
+      "tool": "Multi-Tool Usage",
+      "category": "CalculatorTool + TextProcessorTool",
+      "query": "Calculate 2^8. Also, what is the word count of \"Artificial intelligence is transforming the world\"",
+      "result": "256\n\nThe word count for \"Artificial intelligence is transforming the world\" is 6."
+    },
+    {
+      "tool": "Multi-Tool Usage",
+      "category": "TextProcessorTool + WeatherMockTool",
+      "query": "Convert \"machine learning\" to title case. Also, what is the weather in New York?",
+      "result": "The title case version of \"machine learning\" is \"Machine Learning\".\n\nThe weather in New York is Cloudy with a temperature of 21°C."
     }
   ]
 }
