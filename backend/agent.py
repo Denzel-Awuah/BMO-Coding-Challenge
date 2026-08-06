@@ -1,7 +1,7 @@
 import re
 import uuid
 from datetime import datetime
-from tools import TextProcessorTool, CalculatorTool, WeatherMockTool
+from .tools import TextProcessorTool, CalculatorTool, WeatherMockTool
 
 
 class AgentController:

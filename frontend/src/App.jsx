@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from './components/Sidebar'
 import ChatWindow from './components/ChatWindow'
 
-const API_BASE = 'http://localhost:5000/api'
+const API_BASE = import.meta.env.VITE_API_BASE || '/api'
 
 export default function App(){
   const [task, setTask] = useState('')
