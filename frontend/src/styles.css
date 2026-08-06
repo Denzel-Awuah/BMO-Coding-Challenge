@@ -45,7 +45,7 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .connection-badge{margin-top:8px}
 .messages{flex:1;overflow:auto;padding:18px 24px}
 
-.message{max-width:78%;margin-bottom:12px;padding:12px;border-radius:14px;box-shadow:var(--shadow);position:relative}
+.message{max-width:78%;margin-bottom:12px;padding:16px;border-radius:14px;box-shadow:var(--shadow);position:relative}
 /* user bubble: solid BMO red, white text for contrast */
 .message.user{margin-left:auto;background:var(--bmo-red);color:white;border:1px solid rgba(200,16,46,0.25)}
 .message.user .message-content{color:white}
@@ -60,11 +60,11 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .message.user::before{content:"";width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.15);position:absolute;right:-40px;top:8px}
 .message.assistant::before{content:"";width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.12);position:absolute;left:-40px;top:8px}
 .message-content{font-size:15px}
-.message-output{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.15)}
-.message-meta{margin-top:8px;font-size:13px;color:var(--muted)}
+.message-output{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.15)}
+.message-meta{margin-top:12px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
 .steps-summary{color:var(--muted);cursor:pointer}
 .steps{margin:6px 0 0;padding-left:18px}
-.step-item{font-size:12px;margin-bottom:4px}
+.step-item{font-size:12px;margin-bottom:6px;color:rgba(255,255,255,0.9)}
 
 /* live steps shown during streaming — no summary toggle */
 .steps-streaming{margin:8px 0 0;padding-left:18px}
