@@ -2,12 +2,17 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 import json
+import sys
+from pathlib import Path
 from datetime import datetime
-from .agent import AgentController
 
-# Note: This module is intended to be imported as a package module (backend.app)
-# For local development run using: python -m backend
-# In production/docker we use a WSGI server such as gunicorn with the module path backend.app:app
+# Support both package execution (python -m backend / gunicorn backend.app:app)
+# and direct script execution (python app.py from the backend directory).
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from backend.agent import AgentController
+else:
+    from .agent import AgentController
 
 DATA_FILE = os.path.join(os.path.dirname(__file__), "data.json")
 
