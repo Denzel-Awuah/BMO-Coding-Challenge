@@ -1,0 +1,124 @@
+{
+  "tests": [
+    {
+      "tool": "TextProcessorTool",
+      "category": "uppercase",
+      "query": "make this uppercase \"hello world\"",
+      "result": "HELLO WORLD"
+    },
+    {
+      "tool": "TextProcessorTool",
+      "category": "uppercase",
+      "query": "convert to uppercase \"bmo coding challenge\"",
+      "result": "BMO CODING CHALLENGE"
+    },
+    {
+      "tool": "TextProcessorTool",
+      "category": "lowercase",
+      "query": "convert to lowercase \"BMO Bank of Montreal\"",
+      "result": "bmo bank of montreal"
+    },
+    {
+      "tool": "TextProcessorTool",
+      "category": "lowercase",
+      "query": "make this lowercase \"AI ENGINEERING\"",
+      "result": "ai engineering"
+    },
+    {
+      "tool": "TextProcessorTool",
+      "category": "reverse",
+      "query": "reverse \"agent\"",
+      "result": "tnega"
+    },
+    {
+      "tool": "TextProcessorTool",
+      "category": "reverse",
+      "query": "reverse \"bmo\"",
+      "result": "omb"
+    },
+    {
+      "tool": "TextProcessorTool",
+      "category": "title case",
+      "query": "title case \"bmo coding challenge\"",
+      "result": "Bmo Coding Challenge"
+    },
+    {
+      "tool": "TextProcessorTool",
+      "category": "title case",
+      "query": "title case \"artificial intelligence\"",
+      "result": "Artificial Intelligence"
+    },
+    {
+      "tool": "TextProcessorTool",
+      "category": "word count",
+      "query": "count words \"one two three four\"",
+      "result": "4"
+    },
+    {
+      "tool": "TextProcessorTool",
+      "category": "word count",
+      "query": "word count \"BMO is building the future\"",
+      "result": "5"
+    },
+    {
+      "tool": "CalculatorTool",
+      "category": "arithmetic",
+      "query": "calculate 3+5",
+      "result": "8"
+    },
+    {
+      "tool": "CalculatorTool",
+      "category": "arithmetic",
+      "query": "What is 12 / 3",
+      "result": "4"
+    },
+    {
+      "tool": "CalculatorTool",
+      "category": "multiplication",
+      "query": "What is 5 x 10 / 2",
+      "result": "25"
+    },
+    {
+      "tool": "CalculatorTool",
+      "category": "multiplication",
+      "query": "evaluate 4 x 3",
+      "result": "12"
+    },
+    {
+      "tool": "CalculatorTool",
+      "category": "power",
+      "query": "calculate 2^3",
+      "result": "8"
+    },
+    {
+      "tool": "CalculatorTool",
+      "category": "power",
+      "query": "What is 4^2",
+      "result": "16"
+    },
+    {
+      "tool": "WeatherMockTool",
+      "category": "city weather",
+      "query": "What is the weather in Toronto?",
+      "result": "The weather in Toronto is Cloudy with a temperature of 27°C."
+    },
+    {
+      "tool": "WeatherMockTool",
+      "category": "city weather",
+      "query": "Tell me the weather for Vancouver",
+      "result": "The weather in Vancouver is Cloudy with a temperature of 28°C."
+    },
+    {
+      "tool": "WeatherMockTool",
+      "category": "unknown location",
+      "query": "What is the weather?",
+      "result": "Weather information not available for the specified location."
+    },
+    {
+      "tool": "WeatherMockTool",
+      "category": "city weather",
+      "query": "What is the forecast in Hamilton?",
+      "result": "The weather in Hamilton is Sunny with a temperature of 23°C."
+    }
+  ]
+}
