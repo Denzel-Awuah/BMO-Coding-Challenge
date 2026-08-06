@@ -118,7 +118,7 @@ class AgentController:
                 )
                 outputs.append(f"[Error in {tool.name}: {exc}]")
 
-        final_output = "  ".join(outputs) if outputs else ""
+        final_output = "\n\n".join(outputs) if outputs else ""
         step += 1
         steps.append(f"Step {step}: Composed final answer from {len(outputs)} result(s)")
         step += 1
@@ -178,7 +178,7 @@ class AgentController:
                 yield {"type": "step", "data": f"Tool {tool.name} failed after {self.max_retries + 1} attempts: {exc}"}
                 outputs.append(f"[Error in {tool.name}: {exc}]")
 
-        final_output = "  ".join(outputs) if outputs else ""
+        final_output = "\n\n".join(outputs) if outputs else ""
         yield {"type": "step", "data": f"Composed final answer from {len(outputs)} result(s)"}
         yield {
             "type": "result",

@@ -15,31 +15,31 @@ class TextProcessorTool:
             target = self._extract_between_quotes(text) or self._extract_after_keyword(text, "uppercase") or text
             result = target.upper()
             steps.append(f"TextProcessor: converting to uppercase -> {result}")
-            return result
+            return f'The uppercase version of "{target}" is "{result}".'
 
         if "lowercase" in lowered or "to lower" in lowered:
             target = self._extract_between_quotes(text) or self._extract_after_keyword(text, "lowercase") or text
             result = target.lower()
             steps.append(f"TextProcessor: converting to lowercase -> {result}")
-            return result
+            return f'The lowercase version of "{target}" is "{result}".'
 
         if "word count" in lowered or "count words" in lowered or "wordcount" in lowered:
             target = self._extract_between_quotes(text) or self._extract_after_keyword(text, "word count") or text
             wc = len(re.findall(r"\w+", target))
             steps.append(f"TextProcessor: word count -> {wc}")
-            return str(wc)
+            return f'The word count for "{target}" is {wc}.'
 
         if "reverse" in lowered:
             target = self._extract_between_quotes(text) or self._extract_after_keyword(text, "reverse") or text
             result = target[::-1]
             steps.append(f"TextProcessor: reverse -> {result}")
-            return result
+            return f'The reverse of "{target}" is "{result}".'
 
         if "title case" in lowered or "titlecase" in lowered:
             target = self._extract_between_quotes(text) or self._extract_after_keyword(text, "title case") or text
             result = target.title()
             steps.append(f"TextProcessor: title case -> {result}")
-            return result
+            return f'The title case version of "{target}" is "{result}".'
 
         # default: echo back trimmed text
         steps.append("TextProcessor: no specific operation detected, echoing input")
