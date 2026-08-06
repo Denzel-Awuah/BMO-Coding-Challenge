@@ -33,3 +33,14 @@ The backend serves two endpoints:
   -> returns persisted history (data.json)
 
 Data persistence uses data.json in the backend folder.
+
+Running unit tests
+------------------
+
+1. Ensure the backend virtual environment is active (see steps above).
+2. Install test dependencies (already included in requirements.txt):
+   pip install -r requirements.txt
+3. From the backend folder, run:
+   pytest -q
+
+The tests cover the core tools (TextProcessorTool, CalculatorTool, WeatherMockTool) and the AgentController selection and handling logic. They are located in backend/tests/.

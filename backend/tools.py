@@ -82,8 +82,9 @@ class CalculatorTool:
         lowered = text.lower()
         for kw in ["calculate", "what is", "what's", "evaluate", "compute"]:
             if kw in lowered:
-                # preserve original case for numbers and operators
-                return text.split(kw, 1)[1].strip()
+                # find the keyword position in the lowercase string and slice the original text
+                idx = lowered.find(kw)
+                return text[idx + len(kw):].strip()
         # fallback: return whole text
         return text.strip()
 

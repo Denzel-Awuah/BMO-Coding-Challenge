@@ -12,3 +12,17 @@ The frontend expects the backend to be running at http://localhost:5000 (default
 
 Notes:
 - Enter tasks in the input box and submit. The UI shows the last result and the persisted history.
+
+Running unit tests
+-------------------
+
+1. Install dependencies if not already installed:
+   npm install
+
+2. Run the unit tests (uses Vitest + React Testing Library):
+   npm test
+
+3. For an interactive watch mode during development:
+   npm run test:watch
+
+Test files are located under frontend/src/components/__tests__ and cover the ChatWindow and Sidebar components.
