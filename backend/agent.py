@@ -1,4 +1,5 @@
 import re
+import time
 import uuid
 from datetime import datetime
 
@@ -138,48 +139,53 @@ class AgentController:
     # ------------------------------------------------------------------
 
     def handle_stream(self, task_text: str):
-        """Yield step/result events for real-time streaming."""
-        yield {"type": "step", "data": f"Received input: \"{task_text}\""}
+        """Yield step/result events for real-time streaming with a delay between
+        each step so the frontend can visibly animate the reasoning trace."""
+        STEP_DELAY = 0.5  # seconds between each streamed step
+
+        def step(msg):
+            """Yield a step event then pause so the client sees it arrive progressively."""
+            yield {"type": "step", "data": msg}
+            time.sleep(STEP_DELAY)
+
+        yield from step(f"Received input: \"{task_text}\"")
 
         subtasks = self._plan_subtasks(task_text)
-        yield {
-            "type": "step",
-            "data": (
-                f"Planner identified {len(subtasks)} subtask(s): "
-                + " | ".join(f'"{s}"' for s in subtasks)
-            ),
-        }
+        yield from step(
+            f"Planner identified {len(subtasks)} subtask(s): "
+            + " | ".join(f'"{s}"' for s in subtasks)
+        )
 
         tools_used = []
         outputs = []
 
         for idx, sub in enumerate(subtasks, start=1):
-            yield {"type": "step", "data": f"Processing subtask {idx}: \"{sub}\""}
+            yield from step(f"Processing subtask {idx}: \"{sub}\"")
 
             tool_key = self.select_tool(sub)
             if not tool_key:
-                yield {"type": "step", "data": f"No tool matched for subtask {idx} — echoing input."}
+                yield from step(f"No tool matched for subtask {idx} — echoing input.")
                 outputs.append(sub)
                 continue
 
             tool = self.tools[tool_key]
             if tool.name not in tools_used:
                 tools_used.append(tool.name)
-            yield {"type": "step", "data": f"Selected tool {tool.name} for subtask {idx}"}
+            yield from step(f"Selected tool {tool.name} for subtask {idx}")
 
             tool_steps = []
             try:
                 output = self._execute_with_retries(tool, sub, tool_steps)
                 for s in tool_steps:
-                    yield {"type": "step", "data": s}
+                    yield from step(s)
                 outputs.append(output)
-                yield {"type": "step", "data": f"Tool {tool.name} result: \"{output}\""}
+                yield from step(f"Tool {tool.name} result: \"{output}\"")
             except Exception as exc:
-                yield {"type": "step", "data": f"Tool {tool.name} failed after {self.max_retries + 1} attempts: {exc}"}
+                yield from step(f"Tool {tool.name} failed after {self.max_retries + 1} attempts: {exc}")
                 outputs.append(f"[Error in {tool.name}: {exc}]")
 
         final_output = "\n\n".join(outputs) if outputs else ""
-        yield {"type": "step", "data": f"Composed final answer from {len(outputs)} result(s)"}
+        yield from step(f"Composed final answer from {len(outputs)} result(s)")
         yield {
             "type": "result",
             "data": {

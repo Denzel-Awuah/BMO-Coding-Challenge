@@ -98,7 +98,11 @@ def stream_task():
                 # unknown event, just forward
                 yield f"data: {json.dumps(evt)}\n\n"
         # final close
-    return app.response_class(event_stream(), mimetype='text/event-stream')
+    response = app.response_class(event_stream(), mimetype='text/event-stream')
+    # Prevent nginx and any proxy from buffering the SSE stream
+    response.headers['X-Accel-Buffering'] = 'no'
+    response.headers['Cache-Control'] = 'no-cache'
+    return response
 
 
 @app.route("/api/tasks", methods=["GET"])
