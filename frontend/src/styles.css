@@ -1,11 +1,12 @@
 /* BMO-themed chat layout */
 :root{
-  --bg:#f3f6fb;
+  --bg:#f0f6fb;
   --card:#ffffff;
   --muted:#6b7280;
-  --bmo-red:#c8102e; /* primary */
-  --bmo-navy:#05294b; /* accent */
-  --accent:var(--bmo-red);
+  --bmo-red:#c8102e; /* red from logo */
+  --bmo-blue:#0072ce; /* blue background in logo */
+  --accent:var(--bmo-blue);
+  --accent-2:var(--bmo-red);
   --success:#16a34a;
   --shadow: 0 8px 24px rgba(8,20,48,0.08);
   --radius:12px;
@@ -15,8 +16,8 @@
 body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--bg); color:var(--bmo-navy)}
 .chat-app{display:flex;height:calc(100vh - 56px);max-width:1200px;margin:28px auto;border-radius:12px;overflow:hidden}
 
-.sidebar{width:320px;background:linear-gradient(180deg, #fff, #fbfbfb);border-right:1px solid #e6eef6;padding:18px;display:flex;flex-direction:column}
-.sidebar .logo{width:40px;height:40px;border-radius:8px;background:var(--bmo-red);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;margin-right:10px}
+.sidebar{width:320px;background:linear-gradient(180deg,#ffffff,#f7fbff);border-right:1px solid #e6eef6;padding:18px;display:flex;flex-direction:column}
+.logo-img{width:44px;height:44px;border-radius:8px;object-fit:cover;margin-right:10px;box-shadow:0 4px 12px rgba(0,0,0,0.06)}
 .sidebar-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .title{font-size:16px;font-weight:700}
 .subtitle{font-size:12px;color:var(--muted)}
@@ -26,13 +27,13 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .history-scroll{overflow-y:auto; overflow-x:hidden; flex:1; padding-right:6px}
 .history-row{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:8px;cursor:pointer;border:1px solid transparent;margin-bottom:8px;min-width:0;gap:8px}
 .history-row:hover{background:#fff;border-color:#eef6ff}
-.history-row.active{background:linear-gradient(90deg,#fff7f7,#fff);border-left:4px solid var(--bmo-red)}
+.history-row.active{background:linear-gradient(90deg,#f0f7ff,#fff);border-left:4px solid var(--bmo-blue)}
 /* left side takes remaining space and can shrink; right side stays visible */
 .history-row-left{flex:1;min-width:0}
 .history-task{font-size:13px;font-weight:600;color:var(--bmo-navy);overflow-wrap:break-word;white-space:normal}
 .history-ts{font-size:12px;color:var(--muted);margin-top:6px}
 .history-right{flex:0 0 auto;display:flex;gap:8px;align-items:center}
-.tool-tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#fff2f4;color:var(--bmo-red);border:1px solid #fde2e6;white-space:nowrap}
+.tool-tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#eaf4ff;color:var(--bmo-blue);border:1px solid rgba(0,114,206,0.12);white-space:nowrap}
 .sidebar-footer{font-size:12px;color:var(--muted);margin-top:10px}
 .empty{color:var(--muted);padding:10px}
 /* main column takes full height and keeps composer sticky at bottom */
@@ -40,10 +41,21 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .chat-header{padding:18px;border-bottom:1px solid #f1f5f9}
 .messages{flex:1;overflow:auto;padding:18px 24px}
 
-.message{max-width:78%;margin-bottom:12px;padding:12px;border-radius:12px;box-shadow:var(--shadow)}
-.message.user{margin-left:auto;background:linear-gradient(180deg,#fef3f3,#fff);border:1px solid #fdecea}
-.message.assistant{margin-right:auto;background:#fcfdff;border:1px solid #eaf2ff}
-.message-content{font-size:15px;color:var(--bmo-navy)}
+.message{max-width:78%;margin-bottom:12px;padding:12px;border-radius:14px;box-shadow:var(--shadow);position:relative}
+/* user bubble: solid BMO red, white text for contrast */
+.message.user{margin-left:auto;background:var(--bmo-red);color:white;border:1px solid rgba(200,16,46,0.25)}
+.message.user .message-content{color:white}
+/* assistant bubble: solid BMO blue with high-contrast white text */
+.message.assistant{margin-right:auto;background:var(--bmo-blue);color:white;border:1px solid rgba(0,114,206,0.12)}
+.message.assistant .message-content{color:white}
+.message.assistant .message-meta{color:rgba(255,255,255,0.92)}
+.message.assistant .steps-summary{color:rgba(255,255,255,0.85)}
+/* loading dots contrast inside assistant bubble */
+.message.assistant .loading-dots span{background:white}
+/* add small avatar circles */
+.message.user::before{content:"";width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.15);position:absolute;right:-40px;top:8px}
+.message.assistant::before{content:"";width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.12);position:absolute;left:-40px;top:8px}
+.message-content{font-size:15px}
 .message-meta{margin-top:8px;font-size:13px;color:var(--muted)}
 .steps-summary{color:var(--muted);cursor:pointer}
 

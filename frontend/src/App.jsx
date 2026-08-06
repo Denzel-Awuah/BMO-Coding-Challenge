@@ -59,9 +59,9 @@ export default function App(){
     <div className="app chat-app">
       <aside className="sidebar card">
         <div className="sidebar-header">
-          <div className="logo">B</div>
+          <img src="/bmologo.png" className="logo-img" alt="BMO logo" />
           <div>
-            <div className="title">BMO Agent</div>
+            <div className="title">BMO Agent Simulator</div>
             <div className="subtitle">Chat interface</div>
           </div>
         </div>
