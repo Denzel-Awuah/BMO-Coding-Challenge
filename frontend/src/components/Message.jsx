@@ -39,6 +39,10 @@ export default function Message({m}){
           <span className="loading-dots"><span></span><span></span><span></span></span>
         ) : (
           m.text
+            ? m.text.split('\n\n').map((part, i) => (
+                <p key={i} className="output-part">{part}</p>
+              ))
+            : null
         )}
       </div>
 
