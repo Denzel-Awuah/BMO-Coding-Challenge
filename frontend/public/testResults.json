@@ -122,39 +122,45 @@
     },
     {
       "tool": "Multi-Tool Usage",
-      "category": "WeatherMockTool + TextProcessorTool",
+      "category": "weather + word count",
       "query": "What is the weather in Toronto? Also, what is the word count of this sentence \"The quick brown fox jumps over the lazy dog\"",
-      "result": "The weather in Toronto is Cloudy with a temperature of 27°C.\n\nThe word count for \"The quick brown fox jumps over the lazy dog\" is 9."
+      "result": "The weather in Toronto is Cloudy with a temperature of 27°C.\n\nThe word count for \"The quick brown fox jumps over the lazy dog\" is 9.",
+      "toolsUsed": ["WeatherMockTool", "TextProcessorTool"]
     },
     {
       "tool": "Multi-Tool Usage",
-      "category": "CalculatorTool + WeatherMockTool",
+      "category": "arithmetic + weather",
       "query": "Calculate 15 * 4. Also, what is the weather in Vancouver?",
-      "result": "The result of 15 * 4 is 60.\n\nThe weather in Vancouver is Cloudy with a temperature of 28°C."
+      "result": "The result of 15 * 4 is 60.\n\nThe weather in Vancouver is Cloudy with a temperature of 28°C.",
+      "toolsUsed": ["CalculatorTool", "WeatherMockTool"]
     },
     {
       "tool": "Multi-Tool Usage",
-      "category": "TextProcessorTool + CalculatorTool",
+      "category": "reverse + arithmetic",
       "query": "Reverse \"hello world\". Also, calculate 100 / 5",
-      "result": "The reverse of \"hello world\" is \"dlrow olleh\".\n\nThe result of 100 / 5 is 20."
+      "result": "The reverse of \"hello world\" is \"dlrow olleh\".\n\nThe result of 100 / 5 is 20.",
+      "toolsUsed": ["TextProcessorTool", "CalculatorTool"]
     },
     {
       "tool": "Multi-Tool Usage",
-      "category": "WeatherMockTool + TextProcessorTool",
+      "category": "weather + uppercase",
       "query": "What is the weather in London? Also, convert \"bmo bank of montreal\" to uppercase",
-      "result": "The weather in London is Sunny with a temperature of 23°C.\n\nThe uppercase version of \"bmo bank of montreal\" is \"BMO BANK OF MONTREAL\"."
+      "result": "The weather in London is Sunny with a temperature of 23°C.\n\nThe uppercase version of \"bmo bank of montreal\" is \"BMO BANK OF MONTREAL\".",
+      "toolsUsed": ["WeatherMockTool", "TextProcessorTool"]
     },
     {
       "tool": "Multi-Tool Usage",
-      "category": "CalculatorTool + TextProcessorTool",
+      "category": "power + word count",
       "query": "Calculate 2^8. Also, what is the word count of \"Artificial intelligence is transforming the world\"",
-      "result": "The result of 2^8 is 256.\n\nThe word count for \"Artificial intelligence is transforming the world\" is 6."
+      "result": "The result of 2^8 is 256.\n\nThe word count for \"Artificial intelligence is transforming the world\" is 6.",
+      "toolsUsed": ["CalculatorTool", "TextProcessorTool"]
     },
     {
       "tool": "Multi-Tool Usage",
-      "category": "TextProcessorTool + WeatherMockTool",
+      "category": "title case + weather",
       "query": "Convert \"machine learning\" to title case. Also, what is the weather in New York?",
-      "result": "The title case version of \"machine learning\" is \"Machine Learning\".\n\nThe weather in New York is Cloudy with a temperature of 21°C."
+      "result": "The title case version of \"machine learning\" is \"Machine Learning\".\n\nThe weather in New York is Cloudy with a temperature of 21°C.",
+      "toolsUsed": ["TextProcessorTool", "WeatherMockTool"]
     }
   ]
 }

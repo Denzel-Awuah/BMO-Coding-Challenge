@@ -108,6 +108,7 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .test-card{border:1px solid #e7eefc;border-radius:10px;padding:12px;background:white}
 .test-category{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef7ff;color:var(--bmo-blue);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px}
 .test-query,.test-result{font-size:14px;line-height:1.5;color:var(--bmo-navy);margin-top:6px;overflow-wrap:anywhere}
+.test-tools-used{font-size:13px;line-height:1.5;color:var(--bmo-blue);margin-top:8px;padding-top:8px;border-top:1px solid #e7eefc;overflow-wrap:anywhere}
 .modal-state{padding:16px 0;color:var(--muted)}
 .modal-state.error{color:var(--bmo-red)}
 

@@ -85,6 +85,11 @@ export default function TestResultsModal({ isOpen, onClose }) {
                           <span key={i}>{i > 0 && <><br /><br /></>}{line}</span>
                         ))}
                       </div>
+                      {test.toolsUsed && test.toolsUsed.length > 0 && (
+                        <div className="test-tools-used">
+                          <strong>Tools Used:</strong> {test.toolsUsed.join(', ')}
+                        </div>
+                      )}
                     </article>
                   ))}
                 </div>
