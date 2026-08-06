@@ -60,6 +60,7 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .message.user::before{content:"";width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.15);position:absolute;right:-40px;top:8px}
 .message.assistant::before{content:"";width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.12);position:absolute;left:-40px;top:8px}
 .message-content{font-size:15px}
+.message-output{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.15)}
 .message-meta{margin-top:8px;font-size:13px;color:var(--muted)}
 .steps-summary{color:var(--muted);cursor:pointer}
 .steps{margin:6px 0 0;padding-left:18px}
