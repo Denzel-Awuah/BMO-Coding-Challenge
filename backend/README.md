@@ -1,52 +1,173 @@
-Backend (Flask)
+# Backend (Flask)
 
-How to run:
+Flask API for the BMO agent simulator. It powers the tool selection, multi-step
+reasoning, streaming step events, and persisted history.
 
-1. Create a virtual environment (recommended)
-   python -m venv .venv
+---
 
-   Activate the virtual environment (choose the command for your shell):
-   - PowerShell (Windows):
-     Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force
-     . .\.venv\Scripts\Activate.ps1
+## Requirements
 
-   - Command Prompt (cmd.exe) (Windows):
-     .venv\Scripts\activate.bat
+- Python 3.10+ (tested on Python 3.12)
+- pip
+- Docker (optional, for containerized run)
 
-   - Git Bash / MSYS / WSL (bash):
-     source .venv/Scripts/activate   # use .venv/bin/activate on Unix-style venvs
+---
 
-   If the .venv folder does not exist, run:
-     python -m venv .venv
+## Setup
 
+### Create a virtual environment
 
-2. Install dependencies
-   pip install -r requirements.txt
+```bash
+python -m venv .venv
+```
 
-3. Run the app
-   Recommended (clean package-aware run):
-     python -m backend
+### Activate it
 
-   Alternatively, run with a WSGI server (used in Docker):
-     gunicorn -w 2 -b 127.0.0.1:5000 backend.app:app
+**PowerShell (Windows)**
+```powershell
+. .\.venv\Scripts\Activate.ps1
+```
 
-   Note: Running `python app.py` directly is not recommended because it doesn't execute with package context. Use `python -m backend` to ensure package-relative imports work correctly.
+**Command Prompt (Windows)**
+```bat
+.venv\Scripts\activate.bat
+```
 
-The backend serves two endpoints:
-- POST /api/tasks  {"task": "<text>"}
-  -> returns JSON with output, steps, tools, timestamp
-- GET /api/tasks
-  -> returns persisted history (data.json)
+**Git Bash / MSYS / WSL**
+```bash
+source .venv/Scripts/activate
+```
 
-Data persistence uses data.json in the backend folder.
+If the venv does not exist yet, create it with:
+```bash
+python -m venv .venv
+```
 
-Running unit tests
-------------------
+### Install dependencies
 
-1. Ensure the backend virtual environment is active (see steps above).
-2. Install test dependencies (already included in requirements.txt):
-   pip install -r requirements.txt
-3. From the backend folder, run:
-   pytest -q
+```bash
+pip install -r requirements.txt
+```
 
-The tests cover the core tools (TextProcessorTool, CalculatorTool, WeatherMockTool) and the AgentController selection and handling logic. They are located in backend/tests/.
+---
+
+## How to run
+
+### Local
+
+Recommended:
+```bash
+python -m backend
+```
+
+Alternative WSGI run (same entrypoint used in Docker):
+```bash
+gunicorn -w 2 -b 127.0.0.1:5000 backend.app:app
+```
+
+> Note: `python app.py` is not recommended because it bypasses package context.
+
+### Docker
+
+From the repository root:
+```bash
+docker build -t bmo-coding-challenge:latest .
+docker run -d --name bmo-coding-challenge -p 80:80 bmo-coding-challenge:latest
+```
+
+Open:
+```text
+http://localhost
+```
+
+Stop:
+```bash
+docker rm -f bmo-coding-challenge
+```
+
+---
+
+## API Endpoints
+
+### `POST /api/tasks`
+Submits a task and returns the full agent response.
+
+**Request body**
+```json
+{ "task": "What is the weather in Toronto?" }
+```
+
+**Response**
+```json
+{
+  "id": "uuid",
+  "task": "What is the weather in Toronto?",
+  "output": "The weather in Toronto is Cloudy with a temperature of 27°C.",
+  "steps": ["Step 1: ..."],
+  "tools": ["WeatherMockTool"],
+  "timestamp": "2026-08-06T00:00:00Z"
+}
+```
+
+### `POST /api/tasks/stream`
+Streams step-by-step agent progress using Server-Sent Events (SSE).
+
+**Request body**
+```json
+{ "task": "What is the weather in Toronto? Also, calculate 2+2" }
+```
+
+**Response**
+- `Content-Type: text/event-stream`
+- Emits `step` events as the agent reasons
+- Emits a final `result` event with the completed output
+
+### `GET /api/tasks`
+Returns persisted task history from `data.json`.
+
+---
+
+## Implementation Overview
+
+### `agent.py`
+
+Contains the `AgentController`, which:
+- chooses the right tool(s) for a user request
+- splits multi-part requests into subtasks
+- executes tools with retry handling
+- composes the final human-readable response
+- streams step-by-step reasoning events through `handle_stream()`
+
+### `tools.py`
+
+Contains the individual tools used by the agent:
+- `TextProcessorTool` — uppercase, lowercase, reverse, title case, and word count
+- `CalculatorTool` — safe arithmetic evaluation using a restricted AST
+- `WeatherMockTool` — deterministic mock weather responses by city name
+
+Each tool returns a readable result plus step details that are used in the
+chat trace and the test results module.
+
+---
+
+## Tests
+
+Run the backend unit tests from the `backend/` folder:
+
+```bash
+pytest -q
+```
+
+The test suite covers:
+- tool selection
+- tool execution
+- multi-tool reasoning
+- streaming events
+
+---
+
+## Notes
+
+- History is persisted in `backend/data.json`.
+- The frontend dev server proxies `/api` to `http://localhost:5000`.
+- In Docker, nginx serves the frontend and proxies `/api/*` to the backend.
