@@ -143,32 +143,6 @@ npm test
 
 ---
 
-## API Endpoints
-
-| Method | Path | Description |
-|--------|------|-------------|
-| `POST` | `/api/tasks` | Submit a task; returns full JSON result |
-| `GET` | `/api/tasks` | Retrieve persisted history |
-| `POST` | `/api/tasks/stream` | Submit a task; streams SSE step events then a final result |
-
-### POST /api/tasks — request body
-```json
-{ "task": "What is the weather in Toronto?" }
-```
-
-### POST /api/tasks — response
-```json
-{
-  "id": "uuid",
-  "task": "What is the weather in Toronto?",
-  "output": "The weather in Toronto is Cloudy with a temperature of 27°C.",
-  "steps": ["Step 1: ...", "Step 2: ..."],
-  "tools": ["WeatherMockTool"],
-  "timestamp": "2026-08-06T00:00:00Z"
-}
-```
-
----
 
 ## Assumptions and Tradeoffs
 
