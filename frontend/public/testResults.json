@@ -64,37 +64,37 @@
       "tool": "CalculatorTool",
       "category": "arithmetic",
       "query": "calculate 3+5",
-      "result": "8"
+      "result": "The result of 3+5 is 8."
     },
     {
       "tool": "CalculatorTool",
       "category": "arithmetic",
       "query": "What is 12 / 3",
-      "result": "4"
+      "result": "The result of 12 / 3 is 4."
     },
     {
       "tool": "CalculatorTool",
       "category": "multiplication",
       "query": "What is 5 x 10 / 2",
-      "result": "25"
+      "result": "The result of 5 x 10 / 2 is 25."
     },
     {
       "tool": "CalculatorTool",
       "category": "multiplication",
       "query": "evaluate 4 x 3",
-      "result": "12"
+      "result": "The result of 4 x 3 is 12."
     },
     {
       "tool": "CalculatorTool",
       "category": "power",
       "query": "calculate 2^3",
-      "result": "8"
+      "result": "The result of 2^3 is 8."
     },
     {
       "tool": "CalculatorTool",
       "category": "power",
       "query": "What is 4^2",
-      "result": "16"
+      "result": "The result of 4^2 is 16."
     },
     {
       "tool": "WeatherMockTool",
@@ -130,13 +130,13 @@
       "tool": "Multi-Tool Usage",
       "category": "CalculatorTool + WeatherMockTool",
       "query": "Calculate 15 * 4. Also, what is the weather in Vancouver?",
-      "result": "60\n\nThe weather in Vancouver is Cloudy with a temperature of 28°C."
+      "result": "The result of 15 * 4 is 60.\n\nThe weather in Vancouver is Cloudy with a temperature of 28°C."
     },
     {
       "tool": "Multi-Tool Usage",
       "category": "TextProcessorTool + CalculatorTool",
       "query": "Reverse \"hello world\". Also, calculate 100 / 5",
-      "result": "The reverse of \"hello world\" is \"dlrow olleh\".\n\n20.0"
+      "result": "The reverse of \"hello world\" is \"dlrow olleh\".\n\nThe result of 100 / 5 is 20."
     },
     {
       "tool": "Multi-Tool Usage",
@@ -148,7 +148,7 @@
       "tool": "Multi-Tool Usage",
       "category": "CalculatorTool + TextProcessorTool",
       "query": "Calculate 2^8. Also, what is the word count of \"Artificial intelligence is transforming the world\"",
-      "result": "256\n\nThe word count for \"Artificial intelligence is transforming the world\" is 6."
+      "result": "The result of 2^8 is 256.\n\nThe word count for \"Artificial intelligence is transforming the world\" is 6."
     },
     {
       "tool": "Multi-Tool Usage",

@@ -75,7 +75,9 @@ class CalculatorTool:
         steps.append(f"Calculator: expression detected -> {expr}")
         value = self._safe_eval(expr)
         steps.append(f"Calculator: result -> {value}")
-        return str(value)
+        # Format value: show as int when result is a whole number
+        display = int(value) if isinstance(value, float) and value == int(value) else value
+        return f"The result of {expr} is {display}."
 
     def _extract_expression(self, text):
         # try to extract after keywords
