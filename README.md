@@ -33,6 +33,7 @@ streams its reasoning steps in real time, and returns a composed, human-readable
 ## Dependencies
 
 ### Backend (`backend/requirements.txt`)
+
 | Package | Version | Purpose |
 |---------|---------|---------|
 | Flask | 2.2.5 | HTTP API framework |
@@ -41,6 +42,7 @@ streams its reasoning steps in real time, and returns a composed, human-readable
 | pytest | 7.4.2 | Unit test runner |
 
 ### Frontend (`frontend/package.json`)
+
 | Package | Version | Purpose |
 |---------|---------|---------|
 | react / react-dom | 18.x | UI framework |
@@ -77,8 +79,7 @@ npm install
 npm start                  # runs on http://localhost:5173
 ```
 
-Vite automatically proxies `/api` requests to `http://localhost:5000`, so no extra
-configuration is needed.
+Vite automatically proxies `/api` requests to `http://localhost:5000`, so no extra configuration is needed.
 
 ### Option 2 — Docker (single full-stack container)
 
@@ -99,8 +100,7 @@ docker rm -f bmo-agentcoding-challenge
 docker logs -f bmo-agentcoding-challenge
 ```
 
-Inside the container nginx serves the static frontend and proxies `/api/*` to the
-Gunicorn-managed Flask backend on port 5000.
+Inside the container nginx serves the static frontend and proxies `/api/*` to the Gunicorn-managed Flask backend on port 5000.
 
 ---
 
