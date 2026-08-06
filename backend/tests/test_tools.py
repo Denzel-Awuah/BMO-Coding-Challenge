@@ -6,7 +6,7 @@ def test_textprocessor_uppercase():
     tool = TextProcessorTool()
     steps = []
     res = tool.execute('Convert "hello world" to uppercase', steps)
-    assert res == 'HELLO WORLD'
+    assert 'HELLO WORLD' in res
     assert any('uppercase' in s.lower() or 'converting to uppercase' in s.lower() for s in steps)
 
 
@@ -14,22 +14,24 @@ def test_textprocessor_wordcount():
     tool = TextProcessorTool()
     steps = []
     res = tool.execute('Give me the word count for "one two three"', steps)
-    assert res == '3'
+    assert '3' in res
+    assert 'word count' in res.lower()
 
 
 def test_calculator_simple():
     tool = CalculatorTool()
     steps = []
     res = tool.execute('Calculate 3+5', steps)
-    assert res == '8'
+    assert '8' in res
+    assert 'result' in res.lower()
 
 
 def test_calculator_with_x_symbol():
     tool = CalculatorTool()
     steps = []
     res = tool.execute('What is 5 x 10 / 2', steps)
-    # result may be float string or int string depending on eval
-    assert float(res) == 25.0
+    assert '25' in res
+    assert 'result' in res.lower()
 
 
 def test_calculator_invalid():

@@ -59,6 +59,52 @@ def submit_task():
     return jsonify(result)
 
 
+@app.route("/api/tasks/stream", methods=["POST"])
+def stream_task():
+    payload = request.get_json() or {}
+    task_text = payload.get("task")
+    if not task_text:
+        return jsonify({"error": "task field is required"}), 400
+
+    def event_stream():
+        # accumulate step messages so final persisted entry contains the trace
+        accumulated_steps = []
+        for evt in agent.handle_stream(task_text):
+            # if this is a step, collect for persistence
+            if isinstance(evt, dict) and evt.get('type') == 'step':
+                accumulated_steps.append(evt.get('data'))
+                yield f"data: {json.dumps(evt)}\n\n"
+            elif isinstance(evt, dict) and evt.get('type') == 'result':
+                # persist final result with accumulated steps
+                result_obj = evt.get('data')
+                if isinstance(result_obj, dict):
+                    entry = {
+                        "id": result_obj.get("id"),
+                        "task": result_obj.get("task"),
+                        "output": result_obj.get("output"),
+                        "steps": accumulated_steps,
+                        "tools": result_obj.get("tools"),
+                        "timestamp": result_obj.get("timestamp"),
+                    }
+                    try:
+                        save_entry(entry)
+                    except Exception as e:
+                        # emit an event about persisting failure
+                        err_evt = {"type": "step", "data": f"Failed to persist result: {str(e)}"}
+                        yield f"data: {json.dumps(err_evt)}\n\n"
+                # then yield the original result event
+                yield f"data: {json.dumps(evt)}\n\n"
+            else:
+                # unknown event, just forward
+                yield f"data: {json.dumps(evt)}\n\n"
+        # final close
+    response = app.response_class(event_stream(), mimetype='text/event-stream')
+    # Prevent nginx and any proxy from buffering the SSE stream
+    response.headers['X-Accel-Buffering'] = 'no'
+    response.headers['Cache-Control'] = 'no-cache'
+    return response
+
+
 @app.route("/api/tasks", methods=["GET"])
 def get_tasks():
     history = load_history()

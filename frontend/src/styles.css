@@ -32,7 +32,7 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .history-row.active{background:linear-gradient(90deg,#f0f7ff,#fff);border-left:4px solid var(--bmo-blue)}
 /* left side takes remaining space and can shrink; right side stays visible */
 .history-row-left{flex:1;min-width:0}
-.history-task{font-size:13px;font-weight:600;color:var(--bmo-navy);overflow-wrap:break-word;white-space:normal}
+.history-task{font-size:13px;font-weight:600;color:var(--bmo-navy);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:100%}
 .history-ts{font-size:12px;color:var(--muted);margin-top:6px}
 .history-right{flex:0 0 auto;display:flex;gap:8px;align-items:center}
 .tool-tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#eaf4ff;color:var(--bmo-blue);border:1px solid rgba(0,114,206,0.12);white-space:nowrap}
@@ -45,7 +45,7 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .connection-badge{margin-top:8px}
 .messages{flex:1;overflow:auto;padding:18px 24px}
 
-.message{max-width:78%;margin-bottom:12px;padding:12px;border-radius:14px;box-shadow:var(--shadow);position:relative}
+.message{max-width:78%;margin-bottom:12px;padding:16px;border-radius:14px;box-shadow:var(--shadow);position:relative}
 /* user bubble: solid BMO red, white text for contrast */
 .message.user{margin-left:auto;background:var(--bmo-red);color:white;border:1px solid rgba(200,16,46,0.25)}
 .message.user .message-content{color:white}
@@ -60,8 +60,20 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .message.user::before{content:"";width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.15);position:absolute;right:-40px;top:8px}
 .message.assistant::before{content:"";width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.12);position:absolute;left:-40px;top:8px}
 .message-content{font-size:15px}
-.message-meta{margin-top:8px;font-size:13px;color:var(--muted)}
-.steps-summary{color:var(--muted);cursor:pointer}
+.message-output{font-size:15px}
+.message.assistant .message-output{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.15)}
+.output-part{margin:0 0 8px;line-height:1.6}
+.output-part:last-child{margin-bottom:0}
+.message-meta{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.message.assistant .message-meta{margin-top:12px}.message-meta{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.message.assistant .message-meta{margin-top:12px}.steps-summary{color:var(--muted);cursor:pointer}
+.steps{margin:6px 0 0;padding-left:18px}
+.step-item{font-size:12px;margin-bottom:10px;line-height:1.5;color:rgba(255,255,255,0.9)}
+
+/* live steps shown during streaming — no summary toggle */
+.steps-streaming{margin:8px 0 0;padding-left:18px}
+.step-item--live{font-size:12px;margin-bottom:10px;line-height:1.5;animation:fadeInStep 0.3s ease}
+@keyframes fadeInStep{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
 /* loading dots for assistant placeholder */
 .loading-dots{display:inline-flex;gap:6px;align-items:center}
@@ -92,10 +104,13 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .modal-content{display:flex;flex-direction:column;gap:16px}
 .modal-section{border:1px solid #e8eef8;border-radius:12px;padding:14px;background:#fbfdff}
 .modal-section h3{margin:0 0 12px;font-size:16px;color:var(--bmo-red)}
+.modal-section--multi{border-color:rgba(0,114,206,0.25);background:#f0f7ff}
+.modal-section--multi h3{color:var(--bmo-blue)}
 .test-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .test-card{border:1px solid #e7eefc;border-radius:10px;padding:12px;background:white}
 .test-category{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef7ff;color:var(--bmo-blue);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px}
 .test-query,.test-result{font-size:14px;line-height:1.5;color:var(--bmo-navy);margin-top:6px;overflow-wrap:anywhere}
+.test-tools-used{font-size:13px;line-height:1.5;color:var(--bmo-blue);margin-top:8px;padding-top:8px;border-top:1px solid #e7eefc;overflow-wrap:anywhere}
 .modal-state{padding:16px 0;color:var(--muted)}
 .modal-state.error{color:var(--bmo-red)}
 

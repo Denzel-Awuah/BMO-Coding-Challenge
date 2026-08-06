@@ -28,9 +28,6 @@ export default function Sidebar({ history=[], selected, onSelect, copyOutput }){
               <div className="history-task">{h.task}</div>
               <div className="history-ts">{formatTimestamp(h.timestamp)}</div>
             </div>
-            <div className="history-right">
-              <div className="tool-tag">{h.tools.join(', ')}</div>
-            </div>
           </div>
         ))}
       </div>

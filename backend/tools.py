@@ -15,31 +15,31 @@ class TextProcessorTool:
             target = self._extract_between_quotes(text) or self._extract_after_keyword(text, "uppercase") or text
             result = target.upper()
             steps.append(f"TextProcessor: converting to uppercase -> {result}")
-            return result
+            return f'The uppercase version of "{target}" is "{result}".'
 
         if "lowercase" in lowered or "to lower" in lowered:
             target = self._extract_between_quotes(text) or self._extract_after_keyword(text, "lowercase") or text
             result = target.lower()
             steps.append(f"TextProcessor: converting to lowercase -> {result}")
-            return result
+            return f'The lowercase version of "{target}" is "{result}".'
 
         if "word count" in lowered or "count words" in lowered or "wordcount" in lowered:
             target = self._extract_between_quotes(text) or self._extract_after_keyword(text, "word count") or text
             wc = len(re.findall(r"\w+", target))
             steps.append(f"TextProcessor: word count -> {wc}")
-            return str(wc)
+            return f'The word count for "{target}" is {wc}.'
 
         if "reverse" in lowered:
             target = self._extract_between_quotes(text) or self._extract_after_keyword(text, "reverse") or text
             result = target[::-1]
             steps.append(f"TextProcessor: reverse -> {result}")
-            return result
+            return f'The reverse of "{target}" is "{result}".'
 
         if "title case" in lowered or "titlecase" in lowered:
             target = self._extract_between_quotes(text) or self._extract_after_keyword(text, "title case") or text
             result = target.title()
             steps.append(f"TextProcessor: title case -> {result}")
-            return result
+            return f'The title case version of "{target}" is "{result}".'
 
         # default: echo back trimmed text
         steps.append("TextProcessor: no specific operation detected, echoing input")
@@ -75,7 +75,9 @@ class CalculatorTool:
         steps.append(f"Calculator: expression detected -> {expr}")
         value = self._safe_eval(expr)
         steps.append(f"Calculator: result -> {value}")
-        return str(value)
+        # Format value: show as int when result is a whole number
+        display = int(value) if isinstance(value, float) and value == int(value) else value
+        return f"The result of {expr} is {display}."
 
     def _extract_expression(self, text):
         # try to extract after keywords
@@ -137,7 +139,7 @@ class WeatherMockTool:
         t = text.strip()
         # Try to find patterns like 'in <city>' or 'for <city>' capturing up to punctuation or end
         m = re.search(r"(?:in|for)\s+(.+?)(?:[\?\.!]|$)", t, re.IGNORECASE)
-        stopword_pattern = re.compile(r"\b(?:what(?:'s)?|whats|weather|forecast|is|please|tell|show|give|help)\b", re.IGNORECASE)
+        stopword_pattern = re.compile(r"\b(?:what(?:'s)?|whats|weather|forecast|is|please|tell|show|give|help|the|a|an)\b", re.IGNORECASE)
         if m:
             raw = m.group(1).strip()
             # If the captured raw text contains a stopword like 'what' or 'weather', split before it
@@ -149,17 +151,23 @@ class WeatherMockTool:
             # if after cleaning there's still content, return it
             if raw:
                 return re.sub(r"[^A-Za-z, ]", "", raw).strip()
-        # If not found, try to take the last up to three words as a heuristic (clean punctuation)
+        # Fallback: take the last up to three words as a heuristic, but only if
+        # the candidate contains no stopwords (avoids returning "is the weather" etc.)
         cleaned = re.sub(r"[\?\.!]$", "", t)
         parts = cleaned.split()
         if not parts:
             return None
-        # try last three, then two, then one
         for n in (3, 2, 1):
             if len(parts) >= n:
                 candidate = " ".join(parts[-n:])
-                # remove any leading/trailing punctuation from candidate
                 candidate_clean = re.sub(r"^[^A-Za-z]+|[^A-Za-z]+$", "", candidate)
+                # skip if the entire candidate is made up of stopwords
+                if stopword_pattern.fullmatch(candidate_clean.strip()):
+                    continue
+                # also skip if all individual words are stopwords
+                words = candidate_clean.strip().split()
+                if words and all(stopword_pattern.fullmatch(w) for w in words):
+                    continue
                 if re.search(r"[A-Za-z]", candidate_clean):
                     return re.sub(r"[^A-Za-z, ]", "", candidate_clean).strip()
         return None

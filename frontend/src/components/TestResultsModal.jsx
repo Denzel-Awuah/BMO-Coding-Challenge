@@ -72,14 +72,24 @@ export default function TestResultsModal({ isOpen, onClose }) {
         {!loading && !error && (
           <div className="modal-content">
             {Object.entries(groupedTests).map(([tool, toolTests]) => (
-              <section key={tool} className="modal-section">
+              <section key={tool} className={`modal-section${tool === 'Multi-Tool Usage' ? ' modal-section--multi' : ''}`}>
                 <h3>{tool}</h3>
                 <div className="test-grid">
                   {toolTests.map((test, index) => (
                     <article key={`${tool}-${index}`} className="test-card">
                       <div className="test-category">{test.category}</div>
                       <div className="test-query"><strong>Query:</strong> {test.query}</div>
-                      <div className="test-result"><strong>Result:</strong> {test.result}</div>
+                      <div className="test-result">
+                        <strong>Result:</strong>{' '}
+                        {test.result.split('\n\n').map((line, i) => (
+                          <span key={i}>{i > 0 && <><br /><br /></>}{line}</span>
+                        ))}
+                      </div>
+                      {test.toolsUsed && test.toolsUsed.length > 0 && (
+                        <div className="test-tools-used">
+                          <strong>Tools Used:</strong> {test.toolsUsed.join(', ')}
+                        </div>
+                      )}
                     </article>
                   ))}
                 </div>
