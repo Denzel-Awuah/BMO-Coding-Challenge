@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import Message from './Message'
 import Composer from './Composer'
 
-export default function ChatWindow({ messages=[], task, setTask, onSubmit, loading, onClear }){
+export default function ChatWindow({ messages=[], task, setTask, onSubmit, loading, onClear, onShowTestResults }){
   const messagesRef = useRef(null)
 
   // auto-scroll to bottom when messages change
@@ -17,9 +17,12 @@ export default function ChatWindow({ messages=[], task, setTask, onSubmit, loadi
         <div>
           <div style={{fontWeight:700}}>Agent Chat</div>
           <div className="subtitle">Submit a task and inspect the agent's execution trace</div>
+          <div className="badge connection-badge"><span className="status-dot" aria-hidden="true"></span>Connected</div>
         </div>
-        <div>
-          <div className="badge"><span className="status-dot" aria-hidden="true"></span>Connected</div>
+        <div className="chat-header-actions">
+          <button className="btn view-tests-button" type="button" onClick={onShowTestResults}>
+            View Tests Results
+          </button>
         </div>
       </div>
 

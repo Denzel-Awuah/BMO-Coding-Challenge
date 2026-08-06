@@ -16,7 +16,7 @@
 body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--bg); color:var(--bmo-navy)}
 .app-shell{position:relative;min-height:100vh;padding:20px}
 .chat-app{display:flex;height:calc(100vh - 56px);max-width:1200px;margin:28px auto;border-radius:12px;overflow:hidden}
-.view-tests-button{position:absolute;top:20px;right:20px;z-index:20}
+.view-tests-button{background:var(--bmo-blue) !important;color:white !important;display:inline-flex;align-items:center;justify-content:center}
 
 .sidebar{width:320px;background:linear-gradient(180deg,#ffffff,#f7fbff);border-right:1px solid #e6eef6;padding:18px;display:flex;flex-direction:column}
 .logo-img{width:44px;height:44px;border-radius:8px;object-fit:cover;margin-right:10px;box-shadow:0 4px 12px rgba(0,0,0,0.06)}
@@ -40,7 +40,9 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 .empty{color:var(--muted);padding:10px}
 /* main column takes full height and keeps composer sticky at bottom */
 .main{flex:1;display:flex;flex-direction:column;background:linear-gradient(180deg,#ffffff,#fbfdff)}
-.chat-header{padding:18px;border-bottom:1px solid #f1f5f9}
+.chat-header{padding:18px;border-bottom:1px solid #f1f5f9;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.chat-header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.connection-badge{margin-top:8px}
 .messages{flex:1;overflow:auto;padding:18px 24px}
 
 .message{max-width:78%;margin-bottom:12px;padding:12px;border-radius:14px;box-shadow:var(--shadow);position:relative}

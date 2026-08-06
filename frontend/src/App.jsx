@@ -54,12 +54,17 @@ export default function App(){
 
   return (
     <div className="app-shell">
-      <button className="btn view-tests-button" type="button" onClick={() => setShowTestResults(true)}>
-        View Tests Results
-      </button>
       <div className="app chat-app">
         <Sidebar history={history} selected={selected} onSelect={populateFromHistory} />
-        <ChatWindow messages={messages} task={task} setTask={setTask} onSubmit={submit} loading={loading} onClear={()=>setTask('')} />
+        <ChatWindow
+          messages={messages}
+          task={task}
+          setTask={setTask}
+          onSubmit={submit}
+          loading={loading}
+          onClear={()=>setTask('')}
+          onShowTestResults={() => setShowTestResults(true)}
+        />
       </div>
       <TestResultsModal isOpen={showTestResults} onClose={() => setShowTestResults(false)} />
     </div>

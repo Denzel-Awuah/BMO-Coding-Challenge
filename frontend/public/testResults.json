@@ -58,7 +58,7 @@
       "tool": "TextProcessorTool",
       "category": "word count",
       "query": "word count \"BMO is building the future\"",
-      "result": "6"
+      "result": "5"
     },
     {
       "tool": "CalculatorTool",
@@ -116,9 +116,9 @@
     },
     {
       "tool": "WeatherMockTool",
-      "category": "unknown location",
-      "query": "Forecast please",
-      "result": "Weather information not available for the specified location."
+      "category": "city weather",
+      "query": "What is the forecast in Hamilton?",
+      "result": "The weather in Hamilton is Sunny with a temperature of 23°C."
     }
   ]
 }
