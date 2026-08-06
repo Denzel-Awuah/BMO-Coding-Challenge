@@ -24,7 +24,13 @@ How to run:
    pip install -r requirements.txt
 
 3. Run the app
-   python app.py
+   Recommended (clean package-aware run):
+     python -m backend
+
+   Alternatively, run with a WSGI server (used in Docker):
+     gunicorn -w 2 -b 127.0.0.1:5000 backend.app:app
+
+   Note: Running `python app.py` directly is not recommended because it doesn't execute with package context. Use `python -m backend` to ensure package-relative imports work correctly.
 
 The backend serves two endpoints:
 - POST /api/tasks  {"task": "<text>"}

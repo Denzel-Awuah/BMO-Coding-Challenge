@@ -3,11 +3,11 @@ from flask_cors import CORS
 import os
 import json
 from datetime import datetime
-try:
-    from .agent import AgentController
-except Exception:
-    # Allow running backend/app.py directly (no package context) during local dev
-    from agent import AgentController
+from .agent import AgentController
+
+# Note: This module is intended to be imported as a package module (backend.app)
+# For local development run using: python -m backend
+# In production/docker we use a WSGI server such as gunicorn with the module path backend.app:app
 
 DATA_FILE = os.path.join(os.path.dirname(__file__), "data.json")
 
