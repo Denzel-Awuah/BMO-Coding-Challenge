@@ -32,7 +32,7 @@ export default function App(){
     // clear current chat and show only the new user message (single request/response)
     const userMsg = {role:'user', text:task}
     // insert assistant placeholder with loading flag
-    const placeholderAssistant = {role:'assistant', text:'', loading:true}
+    const placeholderAssistant = {role:'assistant', text:'', loading:true, meta:{steps:[], tools:[], timestamp: null}}
     setMessages([userMsg, placeholderAssistant])
     setSelected(null)
     try{
