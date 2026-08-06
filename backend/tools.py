@@ -139,7 +139,7 @@ class WeatherMockTool:
         t = text.strip()
         # Try to find patterns like 'in <city>' or 'for <city>' capturing up to punctuation or end
         m = re.search(r"(?:in|for)\s+(.+?)(?:[\?\.!]|$)", t, re.IGNORECASE)
-        stopword_pattern = re.compile(r"\b(?:what(?:'s)?|whats|weather|forecast|is|please|tell|show|give|help)\b", re.IGNORECASE)
+        stopword_pattern = re.compile(r"\b(?:what(?:'s)?|whats|weather|forecast|is|please|tell|show|give|help|the|a|an)\b", re.IGNORECASE)
         if m:
             raw = m.group(1).strip()
             # If the captured raw text contains a stopword like 'what' or 'weather', split before it
@@ -151,17 +151,23 @@ class WeatherMockTool:
             # if after cleaning there's still content, return it
             if raw:
                 return re.sub(r"[^A-Za-z, ]", "", raw).strip()
-        # If not found, try to take the last up to three words as a heuristic (clean punctuation)
+        # Fallback: take the last up to three words as a heuristic, but only if
+        # the candidate contains no stopwords (avoids returning "is the weather" etc.)
         cleaned = re.sub(r"[\?\.!]$", "", t)
         parts = cleaned.split()
         if not parts:
             return None
-        # try last three, then two, then one
         for n in (3, 2, 1):
             if len(parts) >= n:
                 candidate = " ".join(parts[-n:])
-                # remove any leading/trailing punctuation from candidate
                 candidate_clean = re.sub(r"^[^A-Za-z]+|[^A-Za-z]+$", "", candidate)
+                # skip if the entire candidate is made up of stopwords
+                if stopword_pattern.fullmatch(candidate_clean.strip()):
+                    continue
+                # also skip if all individual words are stopwords
+                words = candidate_clean.strip().split()
+                if words and all(stopword_pattern.fullmatch(w) for w in words):
+                    continue
                 if re.search(r"[A-Za-z]", candidate_clean):
                     return re.sub(r"[^A-Za-z, ]", "", candidate_clean).strip()
         return None

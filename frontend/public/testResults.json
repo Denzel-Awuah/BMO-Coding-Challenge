@@ -4,61 +4,61 @@
       "tool": "TextProcessorTool",
       "category": "uppercase",
       "query": "make this uppercase \"hello world\"",
-      "result": "HELLO WORLD"
+      "result": "The uppercase version of \"hello world\" is \"HELLO WORLD\"."
     },
     {
       "tool": "TextProcessorTool",
       "category": "uppercase",
       "query": "convert to uppercase \"bmo coding challenge\"",
-      "result": "BMO CODING CHALLENGE"
+      "result": "The uppercase version of \"bmo coding challenge\" is \"BMO CODING CHALLENGE\"."
     },
     {
       "tool": "TextProcessorTool",
       "category": "lowercase",
       "query": "convert to lowercase \"BMO Bank of Montreal\"",
-      "result": "bmo bank of montreal"
+      "result": "The lowercase version of \"BMO Bank of Montreal\" is \"bmo bank of montreal\"."
     },
     {
       "tool": "TextProcessorTool",
       "category": "lowercase",
       "query": "make this lowercase \"AI ENGINEERING\"",
-      "result": "ai engineering"
+      "result": "The lowercase version of \"AI ENGINEERING\" is \"ai engineering\"."
     },
     {
       "tool": "TextProcessorTool",
       "category": "reverse",
       "query": "reverse \"agent\"",
-      "result": "tnega"
+      "result": "The reverse of \"agent\" is \"tnega\"."
     },
     {
       "tool": "TextProcessorTool",
       "category": "reverse",
       "query": "reverse \"bmo\"",
-      "result": "omb"
+      "result": "The reverse of \"bmo\" is \"omb\"."
     },
     {
       "tool": "TextProcessorTool",
       "category": "title case",
       "query": "title case \"bmo coding challenge\"",
-      "result": "Bmo Coding Challenge"
+      "result": "The title case version of \"bmo coding challenge\" is \"Bmo Coding Challenge\"."
     },
     {
       "tool": "TextProcessorTool",
       "category": "title case",
       "query": "title case \"artificial intelligence\"",
-      "result": "Artificial Intelligence"
+      "result": "The title case version of \"artificial intelligence\" is \"Artificial Intelligence\"."
     },
     {
       "tool": "TextProcessorTool",
       "category": "word count",
       "query": "count words \"one two three four\"",
-      "result": "4"
+      "result": "The word count for \"one two three four\" is 4."
     },
     {
       "tool": "TextProcessorTool",
       "category": "word count",
       "query": "word count \"BMO is building the future\"",
-      "result": "5"
+      "result": "The word count for \"BMO is building the future\" is 5."
     },
     {
       "tool": "CalculatorTool",
