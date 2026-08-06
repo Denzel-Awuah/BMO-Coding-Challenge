@@ -1,7 +1,11 @@
 import re
 import uuid
 from datetime import datetime
-from .tools import TextProcessorTool, CalculatorTool, WeatherMockTool
+try:
+    from .tools import TextProcessorTool, CalculatorTool, WeatherMockTool
+except Exception:
+    # Allow running agent.py directly during local dev (no package context)
+    from tools import TextProcessorTool, CalculatorTool, WeatherMockTool
 
 
 class AgentController:

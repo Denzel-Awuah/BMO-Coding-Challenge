@@ -3,7 +3,11 @@ from flask_cors import CORS
 import os
 import json
 from datetime import datetime
-from .agent import AgentController
+try:
+    from .agent import AgentController
+except Exception:
+    # Allow running backend/app.py directly (no package context) during local dev
+    from agent import AgentController
 
 DATA_FILE = os.path.join(os.path.dirname(__file__), "data.json")
 
