@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from './components/Sidebar'
 import ChatWindow from './components/ChatWindow'
+import TestResultsModal from './components/TestResultsModal'
 
 const API_BASE = import.meta.env.VITE_API_BASE || '/api'
 
@@ -10,6 +11,7 @@ export default function App(){
   const [loading, setLoading] = useState(false)
   const [selected, setSelected] = useState(null) // selected history id
   const [messages, setMessages] = useState([]) // current chat messages [{role, text}]
+  const [showTestResults, setShowTestResults] = useState(false)
 
   useEffect(()=>{ fetchHistory() }, [])
 
@@ -51,9 +53,15 @@ export default function App(){
   }
 
   return (
-    <div className="app chat-app">
-      <Sidebar history={history} selected={selected} onSelect={populateFromHistory} />
-      <ChatWindow messages={messages} task={task} setTask={setTask} onSubmit={submit} loading={loading} onClear={()=>setTask('')} />
+    <div className="app-shell">
+      <button className="btn view-tests-button" type="button" onClick={() => setShowTestResults(true)}>
+        View Tests Results
+      </button>
+      <div className="app chat-app">
+        <Sidebar history={history} selected={selected} onSelect={populateFromHistory} />
+        <ChatWindow messages={messages} task={task} setTask={setTask} onSubmit={submit} loading={loading} onClear={()=>setTask('')} />
+      </div>
+      <TestResultsModal isOpen={showTestResults} onClose={() => setShowTestResults(false)} />
     </div>
   )
 }
