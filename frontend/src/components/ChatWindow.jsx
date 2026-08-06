@@ -19,7 +19,7 @@ export default function ChatWindow({ messages=[], task, setTask, onSubmit, loadi
           <div className="subtitle">Submit a task and inspect the agent's execution trace</div>
         </div>
         <div>
-          <div className="badge">Connected</div>
+          <div className="badge"><span className="status-dot" aria-hidden="true"></span>Connected</div>
         </div>
       </div>
 
