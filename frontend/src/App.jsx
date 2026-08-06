@@ -36,17 +36,64 @@ export default function App(){
     setMessages([userMsg, placeholderAssistant])
     setSelected(null)
     try{
-      const res = await fetch(`${API_BASE}/tasks`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({task}) })
-      const data = await res.json()
-      const assistantMsg = {role:'assistant', text: typeof data.output==='object'? JSON.stringify(data.output): String(data.output), meta:{tools:data.tools, steps:data.steps, timestamp:data.timestamp}}
+      // Stream endpoint returns Server-Sent-Events-like data over POST streaming
+      const res = await fetch(`${API_BASE}/tasks/stream`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({task}) })
+      if(!res.ok){ throw new Error(`Streaming request failed: ${res.status}`) }
+
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ''
+
+      // local assistant message object we update progressively
+      let assistantMsg = {role:'assistant', text:'', loading:true, meta:{steps:[]}}
       setMessages([userMsg, assistantMsg])
-      await fetchHistory()
-      setTask('')
-      setSelected(data.id)
+
+      while(true){
+        const { done, value } = await reader.read()
+        if(done) break
+        buffer += decoder.decode(value, {stream:true})
+        // SSE frames separated by double newlines
+        const parts = buffer.split('\n\n')
+        buffer = parts.pop() // remainder
+        for(const part of parts){
+          const lines = part.split('\n')
+          for(const line of lines){
+            if(line.startsWith('data:')){
+              const jsonStr = line.replace(/^data:\s*/,'')
+              try{
+                const evt = JSON.parse(jsonStr)
+                if(evt.type === 'step'){
+                  assistantMsg.meta.steps = [...assistantMsg.meta.steps, evt.data]
+                  // update assistant placeholder text to show latest step summary
+                  assistantMsg.text = assistantMsg.meta.steps.join('\n')
+                  setMessages([userMsg, {...assistantMsg}])
+                } else if(evt.type === 'result'){
+                  const result = evt.data
+                  assistantMsg.loading = false
+                  assistantMsg.text = typeof result.output === 'object' ? JSON.stringify(result.output) : String(result.output)
+                  assistantMsg.meta.tools = result.tools
+                  assistantMsg.meta.timestamp = result.timestamp
+                  // merge accumulated steps (if backend didn't include them)
+                  assistantMsg.meta.steps = assistantMsg.meta.steps
+
+                  setMessages([userMsg, {...assistantMsg}])
+                  // refresh history (stream endpoint persists result server-side)
+                  await fetchHistory()
+                  setTask('')
+                  setSelected(result.id)
+                }
+              }catch(err){
+                console.error('Failed to parse stream event', err)
+              }
+            }
+          }
+        }
+      }
+
     }catch(err){ 
       console.error(err); 
       // replace placeholder with error message
-      setMessages([userMsg, {role:'assistant', text:'Error: failed to get response from backend.'}])
+      setMessages([userMsg, {role:'assistant', text:`Error: ${err.message || 'failed to get response from backend.'}`}])
       alert('Failed to submit task') 
     }
     finally{ setLoading(false) }
