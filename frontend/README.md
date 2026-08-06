@@ -8,7 +8,7 @@ How to run:
    npm start
 
 This starts a development server (Vite) at http://localhost:5173 by default.
-The frontend expects the backend to be running at http://localhost:5000 (default Flask port).
+By default the frontend uses a relative API path (/api) so it works when the frontend is served by the same host (for example when built into the Docker image and served by nginx). When developing locally with Vite, the dev server has a proxy configured so requests to /api are forwarded to http://localhost:5000. If you prefer to override the API base explicitly, set the VITE_API_BASE environment variable (e.g. VITE_API_BASE=http://localhost:5000) before starting the dev server.
 
 Notes:
 - Enter tasks in the input box and submit. The UI shows the last result and the persisted history.
